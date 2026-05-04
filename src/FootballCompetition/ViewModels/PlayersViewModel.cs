@@ -116,8 +116,10 @@ public partial class PlayersViewModel : ViewModelBase, IRefreshable
                 }
             }
 
+            // Capture the saved key before Refresh() clears Draft via CancelEdit().
+            var savedKey = Draft.Key;
             Refresh();
-            SelectedPlayer = Players.FirstOrDefault(p => p.Key == Draft.Key);
+            SelectedPlayer = Players.FirstOrDefault(p => p.Key == savedKey);
         }
         catch (Exception ex)
         {

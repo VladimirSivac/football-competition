@@ -97,8 +97,10 @@ public partial class TeamsViewModel : ViewModelBase, IRefreshable
             {
                 _service.UpdateTeam(Draft);
             }
+            // Capture the saved key before Refresh() clears Draft via CancelEdit().
+            var savedKey = Draft.Key;
             Refresh();
-            SelectedTeam = Teams.FirstOrDefault(t => t.Key == Draft.Key);
+            SelectedTeam = Teams.FirstOrDefault(t => t.Key == savedKey);
         }
         catch (Exception ex)
         {

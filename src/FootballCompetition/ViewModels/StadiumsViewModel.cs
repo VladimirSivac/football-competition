@@ -90,8 +90,10 @@ public partial class StadiumsViewModel : ViewModelBase, IRefreshable
             {
                 _service.UpdateStadium(Draft);
             }
+            // Capture the saved key before Refresh() clears Draft via CancelEdit().
+            var savedKey = Draft.Key;
             Refresh();
-            SelectedStadium = Stadiums.FirstOrDefault(s => s.Key == Draft.Key);
+            SelectedStadium = Stadiums.FirstOrDefault(s => s.Key == savedKey);
         }
         catch (Exception ex)
         {

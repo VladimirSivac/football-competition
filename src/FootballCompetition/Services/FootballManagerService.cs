@@ -132,8 +132,11 @@ public class FootballManagerService
     ///   * if BOTH teams are bottom-3 by LastSeasonRating -> lowest stadium price
     ///   * otherwise -> average stadium price
     /// "Highest / lowest" are computed across the stadiums that the home team
-    /// owns (Team1.Stadiums); if the home team has no stadiums we fall back
-    /// to the explicit <see cref="Match.StadiumKey"/> price.
+    /// owns (Team1.Stadiums), but the price for each stadium is always read
+    /// from the canonical stadium store so it can never go stale relative to
+    /// what the user sees in the Stadiums tab. If the home team has no
+    /// stadiums (or none of them resolve in the store) we fall back to the
+    /// explicit <see cref="Match.StadiumKey"/> price.
     /// </remarks>
     public decimal CalculateTicketPrice(Team team1, Team team2, Stadium fallbackStadium)
     {
@@ -143,13 +146,18 @@ public class FootballManagerService
             return fallbackStadium.TicketPrice;
         }
 
-        // C# 14: collection expressions / spreads keep this terse. We deliberately
-        // materialise once to avoid repeated enumeration when teams overlap.
         var topThreeKeys = allTeams.Take(3).Select(t => t.Key).ToHashSet();
         var bottomThreeKeys = allTeams.TakeLast(3).Select(t => t.Key).ToHashSet();
 
-        var stadiumPool = team1.Stadiums.Count > 0 ? team1.Stadiums : new List<Stadium> { fallbackStadium };
-        var prices = stadiumPool.Select(s => s.TicketPrice).DefaultIfEmpty(fallbackStadium.TicketPrice).ToList();
+        // Resolve every embedded stadium copy back through the canonical
+        // stadium repo by key so a stadium edited in the Stadiums tab is
+        // immediately reflected in pricing.
+        var prices = team1.Stadiums
+            .Select(s => _stadiumRepo.GetByKey(s.Key))
+            .Where(s => s is not null)
+            .Select(s => s!.TicketPrice)
+            .DefaultIfEmpty(fallbackStadium.TicketPrice)
+            .ToList();
 
         bool bothTop = topThreeKeys.Contains(team1.Key) && topThreeKeys.Contains(team2.Key);
         bool bothBottom = bottomThreeKeys.Contains(team1.Key) && bottomThreeKeys.Contains(team2.Key);
