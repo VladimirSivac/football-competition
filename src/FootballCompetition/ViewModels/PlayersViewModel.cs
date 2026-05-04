@@ -132,14 +132,7 @@ public partial class PlayersViewModel : ViewModelBase, IRefreshable
         try
         {
             var team = _service.GetTeamForPlayer(SelectedPlayer.Key);
-            if (team is null)
-            {
-                _service.DeletePlayer(SelectedPlayer, new Team()); // unaffiliated; just drop
-            }
-            else
-            {
-                _service.DeletePlayer(SelectedPlayer, team);
-            }
+            _service.DeletePlayer(SelectedPlayer, team);
             Refresh();
         }
         catch (Exception ex)

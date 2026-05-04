@@ -75,16 +75,33 @@ public class FootballManagerService
     public void UpdatePlayer(Player player, Team team)
     {
         var idx = team.Players.FindIndex(p => p.Key == player.Key);
-        if (idx >= 0) team.Players[idx] = player;
+        if (idx >= 0)
+        {
+            team.Players[idx] = player;
+        }
+        else
+        {
+            // Player wasn't on this team's roster; treat update as "adopt".
+            team.Players.Add(player);
+        }
         _playerRepo.Update(player);
         _teamRepo.Update(team);
     }
 
-    public void DeletePlayer(Player player, Team team)
+    /// <summary>
+    /// Removes <paramref name="player"/> from the player store and, if the
+    /// player was rostered on a team, updates that team's roster too.
+    /// Pass <paramref name="team"/>=<c>null</c> for an unaffiliated player so
+    /// the team store is not touched at all.
+    /// </summary>
+    public void DeletePlayer(Player player, Team? team)
     {
-        team.Players.RemoveAll(p => p.Key == player.Key);
+        if (team is not null)
+        {
+            team.Players.RemoveAll(p => p.Key == player.Key);
+            _teamRepo.Update(team);
+        }
         _playerRepo.Delete(player);
-        _teamRepo.Update(team);
     }
 
     public void AddStadium(Stadium stadium) => _stadiumRepo.Add(stadium);
