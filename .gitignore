@@ -1,0 +1,27 @@
+# .NET / VS
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+.idea/
+
+# Build / packages
+*.pdb
+*.dll
+*.exe
+*.lock.json
+project.lock.json
+*.nupkg
+
+# OS
+.DS_Store
+Thumbs.db
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Local data store generated at runtime
+data/
