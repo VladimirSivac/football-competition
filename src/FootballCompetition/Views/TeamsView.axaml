@@ -1,0 +1,125 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:FootballCompetition.ViewModels"
+             xmlns:m="using:FootballCompetition.Models"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="960" d:DesignHeight="640"
+             x:Class="FootballCompetition.Views.TeamsView"
+             x:DataType="vm:TeamsViewModel">
+
+    <Grid RowDefinitions="Auto,*" Margin="32,28">
+        <StackPanel Grid.Row="0" Spacing="4" Margin="0,0,0,20">
+            <TextBlock Text="Teams" FontSize="26" FontWeight="Bold" Foreground="#0F172A"/>
+            <TextBlock Text="Roster, coaching staff, and last-season rating used by the dynamic ticket-pricing engine."
+                       FontSize="13" Foreground="#475569"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,16,420">
+            <!-- List -->
+            <Border Grid.Column="0"
+                    Background="White"
+                    CornerRadius="10"
+                    BoxShadow="0 4 12 0 #15000000">
+                <DockPanel LastChildFill="True">
+                    <Border DockPanel.Dock="Top"
+                            BorderBrush="#E2E8F0"
+                            BorderThickness="0,0,0,1"
+                            Padding="16,12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Classes="primary" Content="New Team" Command="{Binding NewCommand}"/>
+                            <Button Classes="ghost"   Content="Edit"     Command="{Binding EditCommand}"/>
+                            <Button Classes="danger"  Content="Delete"   Command="{Binding DeleteCommand}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <DataGrid ItemsSource="{Binding Teams}"
+                              SelectedItem="{Binding SelectedTeam}"
+                              IsReadOnly="True"
+                              GridLinesVisibility="Horizontal"
+                              CanUserResizeColumns="True"
+                              HorizontalScrollBarVisibility="Auto">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name"        Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="City"        Binding="{Binding City}" Width="160"/>
+                            <DataGridTextColumn Header="Coach"       Binding="{Binding Coach}" Width="180"/>
+                            <DataGridTextColumn Header="Rating"      Binding="{Binding LastSeasonRating}" Width="80"/>
+                            <DataGridTextColumn Header="Players"     Binding="{Binding Players.Count}" Width="80"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </Border>
+
+            <!-- Edit panel -->
+            <Border Grid.Column="2"
+                    Background="White"
+                    CornerRadius="10"
+                    Padding="20"
+                    BoxShadow="0 4 12 0 #15000000">
+                <DockPanel LastChildFill="True">
+                    <TextBlock DockPanel.Dock="Top"
+                               Text="Team Details"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,12"/>
+
+                    <StackPanel DockPanel.Dock="Top"
+                                IsVisible="{Binding !IsEditing}"
+                                Spacing="6">
+                        <TextBlock Text="{Binding SelectedTeam.Name, FallbackValue='No team selected'}"
+                                   FontSize="22" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding SelectedTeam.City}" Foreground="#475569"/>
+                        <TextBlock>
+                            <Run Text="Coach: "/>
+                            <Run Text="{Binding SelectedTeam.Coach}"/>
+                        </TextBlock>
+                        <TextBlock>
+                            <Run Text="Last-season rating: "/>
+                            <Run Text="{Binding SelectedTeam.LastSeasonRating}"/>
+                        </TextBlock>
+                        <TextBlock Margin="0,12,0,4" FontWeight="SemiBold" Text="Roster"/>
+                        <ItemsControl ItemsSource="{Binding SelectedTeam.Players}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="m:Player">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="{Binding Number, StringFormat=#{0}}" Width="40" Foreground="#2563EB"/>
+                                        <TextBlock Text="{Binding FullName}"/>
+                                        <TextBlock Text="•"/>
+                                        <TextBlock Text="{Binding Role}" Foreground="#64748B"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Top"
+                                IsVisible="{Binding IsEditing}"
+                                Spacing="10">
+                        <StackPanel>
+                            <TextBlock Text="Name" FontSize="12" Foreground="#475569"/>
+                            <TextBox Text="{Binding Draft.Name}"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="City" FontSize="12" Foreground="#475569"/>
+                            <TextBox Text="{Binding Draft.City}"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Coach" FontSize="12" Foreground="#475569"/>
+                            <TextBox Text="{Binding Draft.Coach}"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Last-season Rating" FontSize="12" Foreground="#475569"/>
+                            <NumericUpDown Value="{Binding Draft.LastSeasonRating}"
+                                           Minimum="0" Maximum="100" Increment="1"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,12,0,0">
+                            <Button Classes="primary" Content="Save"   Command="{Binding SaveCommand}"/>
+                            <Button Classes="ghost"   Content="Cancel" Command="{Binding CancelEditCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

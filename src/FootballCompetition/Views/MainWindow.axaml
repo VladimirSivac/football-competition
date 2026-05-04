@@ -1,0 +1,170 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FootballCompetition.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="780"
+        x:Class="FootballCompetition.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Width="1200" Height="780"
+        MinWidth="980" MinHeight="640"
+        Title="National Football Competition Manager">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="SidebarBackground" Color="#0F172A"/>
+        <SolidColorBrush x:Key="SidebarForeground" Color="#E2E8F0"/>
+        <SolidColorBrush x:Key="SidebarMuted"      Color="#94A3B8"/>
+        <SolidColorBrush x:Key="SidebarAccent"     Color="#22D3EE"/>
+        <SolidColorBrush x:Key="ContentBackground" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="OverlayShade"      Color="#80000000"/>
+    </Window.Resources>
+
+    <Window.Styles>
+        <Style Selector="ListBox.sidebar">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        <Style Selector="ListBox.sidebar ListBoxItem">
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource SidebarForeground}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="ListBox.sidebar ListBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#1E293B"/>
+        </Style>
+        <Style Selector="ListBox.sidebar ListBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="#1E293B"/>
+        </Style>
+        <Style Selector="ListBox.sidebar ListBoxItem:selected /template/ ContentPresenter Border#SelectionMarker">
+            <Setter Property="Background" Value="{StaticResource SidebarAccent}"/>
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#2563EB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#1D4ED8"/>
+        </Style>
+        <Style Selector="Button.danger">
+            <Setter Property="Background" Value="#DC2626"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="Button.danger:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#B91C1C"/>
+        </Style>
+        <Style Selector="Button.ghost">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#0F172A"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="BorderBrush" Value="#CBD5E1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid>
+        <Grid ColumnDefinitions="240,*">
+            <!-- Sidebar -->
+            <Border Grid.Column="0" Background="{StaticResource SidebarBackground}">
+                <DockPanel LastChildFill="True">
+                    <StackPanel DockPanel.Dock="Top" Margin="20,24,20,16" Spacing="6">
+                        <TextBlock Text="National Football"
+                                   FontSize="13"
+                                   Foreground="{StaticResource SidebarMuted}"
+                                   FontWeight="SemiBold"
+                                   LetterSpacing="2"/>
+                        <TextBlock Text="Competition Manager"
+                                   FontSize="22"
+                                   Foreground="{StaticResource SidebarForeground}"
+                                   FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <Border DockPanel.Dock="Bottom"
+                            BorderBrush="#1E293B"
+                            BorderThickness="0,1,0,0"
+                            Padding="20,14">
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Local JSON store"
+                                       FontSize="11"
+                                       Foreground="{StaticResource SidebarMuted}"
+                                       FontWeight="SemiBold"
+                                       LetterSpacing="1"/>
+                            <TextBlock Text="System.Text.Json"
+                                       FontSize="13"
+                                       Foreground="{StaticResource SidebarForeground}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <ListBox Classes="sidebar"
+                             ItemsSource="{Binding Sections}"
+                             SelectedItem="{Binding SelectedSection}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="vm:MainWindowViewModel+NavigationSection">
+                                <StackPanel Orientation="Horizontal" Spacing="14">
+                                    <TextBlock Text="{Binding Glyph}"
+                                               FontFamily="Segoe Fluent Icons,Segoe MDL2 Assets,Symbols"
+                                               FontSize="16"
+                                               Width="20"
+                                               Foreground="{StaticResource SidebarAccent}"/>
+                                    <TextBlock Text="{Binding Title}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+
+            <!-- Main content -->
+            <Border Grid.Column="1" Background="{StaticResource ContentBackground}">
+                <ContentControl Margin="0"
+                                Content="{Binding SelectedSection.ViewModel}"/>
+            </Border>
+        </Grid>
+
+        <!-- Global error overlay -->
+        <Border Background="{StaticResource OverlayShade}"
+                IsVisible="{Binding HasError}"
+                IsHitTestVisible="{Binding HasError}">
+            <Border Background="White"
+                    CornerRadius="10"
+                    Padding="24"
+                    Width="460"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    BoxShadow="0 12 30 0 #40000000">
+                <DockPanel LastChildFill="True">
+                    <TextBlock DockPanel.Dock="Top"
+                               Text="{Binding ErrorTitle}"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="#B91C1C"/>
+                    <TextBlock DockPanel.Dock="Top"
+                               Text="{Binding ErrorMessage}"
+                               TextWrapping="Wrap"
+                               FontSize="14"
+                               Foreground="#0F172A"
+                               Margin="0,12,0,20"/>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Spacing="8">
+                        <Button Classes="primary"
+                                Content="Dismiss"
+                                Command="{Binding DismissErrorCommand}"/>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+        </Border>
+    </Grid>
+
+</Window>
