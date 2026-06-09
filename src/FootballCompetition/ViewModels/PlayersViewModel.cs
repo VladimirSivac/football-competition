@@ -25,7 +25,7 @@ public partial class PlayersViewModel : ViewModelBase, IRefreshable
 
     public string[] Roles { get; } =
     {
-        "Goalkeeper", "Defender", "Midfielder", "Forward",
+        "Вратарь", "Защитник", "Полузащитник", "Нападающий",
     };
 
     [ObservableProperty]
@@ -89,11 +89,11 @@ public partial class PlayersViewModel : ViewModelBase, IRefreshable
         {
             if (SelectedTeam is null)
             {
-                throw new InvalidOperationException("Pick a team for the player.");
+                throw new InvalidOperationException("Выберите команду для игрока.");
             }
             if (string.IsNullOrWhiteSpace(Draft.FullName))
             {
-                throw new InvalidOperationException("Player full name is required.");
+                throw new InvalidOperationException("ФИО игрока обязательно к заполнению.");
             }
 
             var existing = _service.GetPlayers().FirstOrDefault(p => p.Key == Draft.Key);
@@ -163,7 +163,7 @@ public partial class PlayersViewModel : ViewModelBase, IRefreshable
     {
         FullName = string.Empty,
         Age = 18,
-        Role = "Midfielder",
+        Role = "Полузащитник",
         Number = 0,
     };
 

@@ -42,12 +42,12 @@ public partial class ReportsViewModel : ViewModelBase, IRefreshable
     [ObservableProperty]
     private Team? _q3Team2;
     [ObservableProperty]
-    private string _q3Result = "(not calculated)";
+    private string _q3Result = "(не рассчитано)";
 
     // Q4
     public ObservableCollection<TeamGoalDifference> Q4Results { get; } = new();
     [ObservableProperty]
-    private string _q4Headline = "(not calculated)";
+    private string _q4Headline = "(не рассчитано)";
 
     // Q5
     public ObservableCollection<TeamStandingRow> Q5Results { get; } = new();
@@ -108,16 +108,16 @@ public partial class ReportsViewModel : ViewModelBase, IRefreshable
         {
             if (Q3Team1 is null || Q3Team2 is null)
             {
-                Q3Result = "Pick both teams.";
+                Q3Result = "Выберите обе команды.";
                 return;
             }
             if (Q3Team1.Key == Q3Team2.Key)
             {
-                Q3Result = "A team cannot play itself.";
+                Q3Result = "Команда не может играть сама с собой.";
                 return;
             }
             var price = _service.GetTicketPriceForTeams(Q3Team1.Key, Q3Team2.Key);
-            Q3Result = $"{price:0.00} for {Q3Team1.Name} vs {Q3Team2.Name}";
+            Q3Result = $"{price:0.00} для матча {Q3Team1.Name} против {Q3Team2.Name}";
         }
         catch (Exception ex) { _reportError(ex); }
     }
@@ -130,7 +130,7 @@ public partial class ReportsViewModel : ViewModelBase, IRefreshable
             var report = _service.GetBestAndWorstGoalDifference();
             Q4Results.Clear();
             foreach (var row in report.All) Q4Results.Add(row);
-            Q4Headline = $"Best: {report.Best.Team} ({report.Best.GoalDifference:+#;-#;0})  •  Worst: {report.Worst.Team} ({report.Worst.GoalDifference:+#;-#;0})";
+            Q4Headline = $"Лучшая: {report.Best.Team} ({report.Best.GoalDifference:+#;-#;0})  •  Худшая: {report.Worst.Team} ({report.Worst.GoalDifference:+#;-#;0})";
         }
         catch (Exception ex) { _reportError(ex); }
     }

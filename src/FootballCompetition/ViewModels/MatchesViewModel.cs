@@ -109,21 +109,21 @@ public partial class MatchesViewModel : ViewModelBase, IRefreshable
         {
             if (DraftTeam1 is null || DraftTeam2 is null)
             {
-                throw new InvalidOperationException("Both teams must be selected.");
+                throw new InvalidOperationException("Должны быть выбраны обе команды.");
             }
             if (DraftTeam1.Key == DraftTeam2.Key)
             {
-                throw new InvalidOperationException("A team cannot play itself.");
+                throw new InvalidOperationException("Команда не может играть сама с собой.");
             }
             if (DraftStadium is null)
             {
-                throw new InvalidOperationException("Stadium must be selected.");
+                throw new InvalidOperationException("Должен быть выбран стадион.");
             }
             if (!string.IsNullOrWhiteSpace(Draft.Score) &&
                 !FootballManagerService.TryParseScore(Draft.Score, out _, out _))
             {
                 throw new InvalidOperationException(
-                    "Score must use the format 'home:away' (e.g. \"2:1\") or be left blank.");
+                    "Счет должен быть в формате 'хозяева:гости' (например, \"2:1\") или оставлен пустым.");
             }
 
             Draft.Team1Key = DraftTeam1.Key;

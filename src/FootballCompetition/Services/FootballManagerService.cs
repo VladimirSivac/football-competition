@@ -188,7 +188,7 @@ public class FootballManagerService
                 teamLookup.TryGetValue(opponentKey, out var opponent);
                 return new TeamMatchSummary(
                     Team: team.Name,
-                    Opponent: opponent?.Name ?? "(unknown)",
+                    Opponent: opponent?.Name ?? "(неизвестно)",
                     Date: m.Date,
                     Score: string.IsNullOrWhiteSpace(m.Score) ? "—" : m.Score);
             })
@@ -234,9 +234,9 @@ public class FootballManagerService
     {
         var teams = _teamRepo.GetAll().ToList();
         var team1 = teams.FirstOrDefault(t => t.Key == team1Key)
-            ?? throw new InvalidOperationException("Home team not found.");
+            ?? throw new InvalidOperationException("Домашняя команда не найдена.");
         var team2 = teams.FirstOrDefault(t => t.Key == team2Key)
-            ?? throw new InvalidOperationException("Away team not found.");
+            ?? throw new InvalidOperationException("Гостевая команда не найдена.");
 
         // Try to use a real scheduled match between these teams; otherwise
         // pick any stadium (preferring the home team's first one).
@@ -244,7 +244,7 @@ public class FootballManagerService
             FindStadiumFor(team1, team2)
             ?? team1.Stadiums.FirstOrDefault()
             ?? _stadiumRepo.GetAll().FirstOrDefault()
-            ?? throw new InvalidOperationException("No stadium available to price the match.");
+            ?? throw new InvalidOperationException("Нет доступных стадионов для определения цены билета.");
 
         return CalculateTicketPrice(team1, team2, stadium);
     }
@@ -277,8 +277,8 @@ public class FootballManagerService
             .ToList();
 
         return new GoalDifferenceReport(
-            Best: standings.FirstOrDefault() ?? new TeamGoalDifference("(no teams)", 0),
-            Worst: standings.LastOrDefault() ?? new TeamGoalDifference("(no teams)", 0),
+            Best: standings.FirstOrDefault() ?? new TeamGoalDifference("(нет команд)", 0),
+            Worst: standings.LastOrDefault() ?? new TeamGoalDifference("(нет команд)", 0),
             All: standings);
     }
 
@@ -363,7 +363,7 @@ public class FootballManagerService
         return _matchRepo.GetAll()
             .GroupBy(m => m.StadiumKey)
             .Select(g => new StadiumScheduleGroup(
-                Stadium: stadiums.TryGetValue(g.Key, out var s) ? s.Name : "(unknown stadium)",
+                Stadium: stadiums.TryGetValue(g.Key, out var s) ? s.Name : "(неизвестный стадион)",
                 Matches: g.OrderBy(m => m.Date)
                           .Select(m => new ScheduledMatchRow(
                               Date: m.Date,

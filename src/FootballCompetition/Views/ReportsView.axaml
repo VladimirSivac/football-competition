@@ -37,16 +37,16 @@
     <ScrollViewer>
         <StackPanel Margin="32,28">
             <StackPanel Spacing="4" Margin="0,0,0,20">
-                <TextBlock Text="Reports &amp; Queries" FontSize="26" FontWeight="Bold" Foreground="#0F172A"/>
-                <TextBlock Text="Six LINQ-driven reports backed by the FootballManagerService."
+                <TextBlock Text="Отчеты и запросы" FontSize="26" FontWeight="Bold" Foreground="#0F172A"/>
+                <TextBlock Text="Шесть отчетов на основе LINQ, поддерживаемых сервисом FootballManagerService."
                            FontSize="13" Foreground="#475569"/>
             </StackPanel>
 
             <!-- Q1 -->
             <Border Classes="card">
                 <StackPanel>
-                    <TextBlock Classes="title" Text="1. Match dates &amp; scores for a team"/>
-                    <TextBlock Classes="subtitle" Text="Pick a team to see every match it has played, opponents and scores."/>
+                    <TextBlock Classes="title" Text="1. Даты матчей и результаты команды"/>
+                    <TextBlock Classes="subtitle" Text="Выберите команду для просмотра всех её матчей, соперников и счетов."/>
                     <Grid ColumnDefinitions="*,12,Auto">
                         <ComboBox Grid.Column="0"
                                   ItemsSource="{Binding Teams}"
@@ -58,7 +58,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="2" Classes="primary" Content="Run" Command="{Binding RunQ1Command}"/>
+                        <Button Grid.Column="2" Classes="primary" Content="Запустить" Command="{Binding RunQ1Command}"/>
                     </Grid>
                     <DataGrid Margin="0,12,0,0"
                               ItemsSource="{Binding Q1Results}"
@@ -67,10 +67,10 @@
                               MaxHeight="240"
                               GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Team"     Binding="{Binding Team}"     Width="*"/>
-                            <DataGridTextColumn Header="Opponent" Binding="{Binding Opponent}" Width="*"/>
-                            <DataGridTextColumn Header="Date"     Binding="{Binding Date, StringFormat=yyyy-MM-dd}" Width="140"/>
-                            <DataGridTextColumn Header="Score"    Binding="{Binding Score}"    Width="100"/>
+                            <DataGridTextColumn Header="Команда"     Binding="{Binding Team}"     Width="*"/>
+                            <DataGridTextColumn Header="Соперник" Binding="{Binding Opponent}" Width="*"/>
+                            <DataGridTextColumn Header="Дата"     Binding="{Binding Date, StringFormat=yyyy-MM-dd}" Width="140"/>
+                            <DataGridTextColumn Header="Счет"    Binding="{Binding Score}"    Width="100"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -79,8 +79,8 @@
             <!-- Q2 -->
             <Border Classes="card">
                 <StackPanel>
-                    <TextBlock Classes="title" Text="2. Players in a fixture (date + stadium)"/>
-                    <TextBlock Classes="subtitle" Text="Returns jersey numbers and last names for both teams playing on the chosen date."/>
+                    <TextBlock Classes="title" Text="2. Игроки в матче (дата + стадион)"/>
+                    <TextBlock Classes="subtitle" Text="Возвращает номера и фамилии игроков обеих команд, игравших в выбранный день."/>
                     <Grid ColumnDefinitions="*,12,*,12,Auto">
                         <CalendarDatePicker Grid.Column="0"
                                             SelectedDate="{Binding Q2Date}"
@@ -95,7 +95,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="4" Classes="primary" Content="Run" Command="{Binding RunQ2Command}"/>
+                        <Button Grid.Column="4" Classes="primary" Content="Запустить" Command="{Binding RunQ2Command}"/>
                     </Grid>
                     <DataGrid Margin="0,12,0,0"
                               ItemsSource="{Binding Q2Results}"
@@ -104,9 +104,9 @@
                               MaxHeight="240"
                               GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Team"      Binding="{Binding Team}"     Width="*"/>
+                            <DataGridTextColumn Header="Команда"      Binding="{Binding Team}"     Width="*"/>
                             <DataGridTextColumn Header="#"         Binding="{Binding Number}"   Width="80"/>
-                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -115,8 +115,8 @@
             <!-- Q3 -->
             <Border Classes="card">
                 <StackPanel>
-                    <TextBlock Classes="title" Text="3. Dynamic ticket price for two teams"/>
-                    <TextBlock Classes="subtitle" Text="Top-3 vs top-3 → highest price. Bottom-3 vs bottom-3 → lowest price. Otherwise → average."/>
+                    <TextBlock Classes="title" Text="3. Динамическая цена билета для двух команд"/>
+                    <TextBlock Classes="subtitle" Text="Топ-3 против топ-3 → максимальная цена. Худшие 3 против худших 3 → минимальная цена. Иначе → средняя."/>
                     <Grid ColumnDefinitions="*,12,*,12,Auto">
                         <ComboBox Grid.Column="0"
                                   ItemsSource="{Binding Teams}"
@@ -138,7 +138,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="4" Classes="primary" Content="Calculate" Command="{Binding RunQ3Command}"/>
+                        <Button Grid.Column="4" Classes="primary" Content="Рассчитать" Command="{Binding RunQ3Command}"/>
                     </Grid>
                     <Border Margin="0,12,0,0"
                             Padding="14,10"
@@ -155,9 +155,9 @@
             <!-- Q4 -->
             <Border Classes="card">
                 <StackPanel>
-                    <TextBlock Classes="title" Text="4. Best &amp; worst goal difference"/>
-                    <TextBlock Classes="subtitle" Text="Computed by parsing the score strings of every played match."/>
-                    <Button Classes="primary" Content="Run" Command="{Binding RunQ4Command}" HorizontalAlignment="Left"/>
+                    <TextBlock Classes="title" Text="4. Лучшая и худшая разница мячей"/>
+                    <TextBlock Classes="subtitle" Text="Вычисляется путем анализа результатов всех сыгранных матчей."/>
+                    <Button Classes="primary" Content="Запустить" Command="{Binding RunQ4Command}" HorizontalAlignment="Left"/>
                     <TextBlock Margin="0,12,0,0"
                                Text="{Binding Q4Headline}"
                                FontSize="14"
@@ -170,8 +170,8 @@
                               MaxHeight="240"
                               GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Team" Binding="{Binding Team}" Width="*"/>
-                            <DataGridTextColumn Header="Goal Difference" Binding="{Binding GoalDifference}" Width="180"/>
+                            <DataGridTextColumn Header="Команда" Binding="{Binding Team}" Width="*"/>
+                            <DataGridTextColumn Header="Разница мячей" Binding="{Binding GoalDifference}" Width="180"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -180,9 +180,9 @@
             <!-- Q5 -->
             <Border Classes="card">
                 <StackPanel>
-                    <TextBlock Classes="title" Text="5. Prize-winning teams (top 3 by points)"/>
-                    <TextBlock Classes="subtitle" Text="Standard scoring: win = 3, draw = 1, loss = 0."/>
-                    <Button Classes="primary" Content="Run" Command="{Binding RunQ5Command}" HorizontalAlignment="Left"/>
+                    <TextBlock Classes="title" Text="5. Призеры (топ-3 по очкам)"/>
+                    <TextBlock Classes="subtitle" Text="Стандартный подсчет очков: победа = 3, ничья = 1, поражение = 0."/>
+                    <Button Classes="primary" Content="Запустить" Command="{Binding RunQ5Command}" HorizontalAlignment="Left"/>
                     <DataGrid Margin="0,12,0,0"
                               ItemsSource="{Binding Q5Results}"
                               IsReadOnly="True"
@@ -190,13 +190,13 @@
                               MaxHeight="240"
                               GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Team"   Binding="{Binding Team}"  Width="*"/>
-                            <DataGridTextColumn Header="P"      Binding="{Binding Played}" Width="60"/>
-                            <DataGridTextColumn Header="W"      Binding="{Binding Won}"    Width="60"/>
-                            <DataGridTextColumn Header="D"      Binding="{Binding Drawn}"  Width="60"/>
-                            <DataGridTextColumn Header="L"      Binding="{Binding Lost}"   Width="60"/>
-                            <DataGridTextColumn Header="GD"     Binding="{Binding GoalDifference}" Width="80"/>
-                            <DataGridTextColumn Header="Pts"    Binding="{Binding Points}" Width="80"/>
+                            <DataGridTextColumn Header="Команда"   Binding="{Binding Team}"  Width="*"/>
+                            <DataGridTextColumn Header="И"      Binding="{Binding Played}" Width="60"/>
+                            <DataGridTextColumn Header="В"      Binding="{Binding Won}"    Width="60"/>
+                            <DataGridTextColumn Header="Н"      Binding="{Binding Drawn}"  Width="60"/>
+                            <DataGridTextColumn Header="П"      Binding="{Binding Lost}"   Width="60"/>
+                            <DataGridTextColumn Header="РМ"     Binding="{Binding GoalDifference}" Width="80"/>
+                            <DataGridTextColumn Header="Очки"    Binding="{Binding Points}" Width="80"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -205,8 +205,8 @@
             <!-- Q6 -->
             <Border Classes="card">
                 <StackPanel>
-                    <TextBlock Classes="title" Text="6. Match schedule grouped by stadium"/>
-                    <Button Classes="primary" Content="Run" Command="{Binding RunQ6Command}" HorizontalAlignment="Left"/>
+                    <TextBlock Classes="title" Text="6. Расписание матчей, сгруппированное по стадионам"/>
+                    <Button Classes="primary" Content="Запустить" Command="{Binding RunQ6Command}" HorizontalAlignment="Left"/>
                     <ItemsControl Margin="0,12,0,0" ItemsSource="{Binding Q6Results}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="s:StadiumScheduleGroup">
@@ -225,7 +225,7 @@
                                                                    Foreground="#475569"/>
                                                         <TextBlock Grid.Column="1">
                                                             <Run Text="{Binding Team1}"/>
-                                                            <Run Text=" vs "/>
+                                                            <Run Text=" против "/>
                                                             <Run Text="{Binding Team2}"/>
                                                         </TextBlock>
                                                         <TextBlock Grid.Column="2"

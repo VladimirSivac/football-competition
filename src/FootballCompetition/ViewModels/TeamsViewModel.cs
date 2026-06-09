@@ -85,7 +85,7 @@ public partial class TeamsViewModel : ViewModelBase, IRefreshable
         {
             if (string.IsNullOrWhiteSpace(Draft.Name))
             {
-                throw new InvalidOperationException("Team name is required.");
+                throw new InvalidOperationException("Название команды обязательно к заполнению.");
             }
 
             var existing = _service.GetTeams().FirstOrDefault(t => t.Key == Draft.Key);

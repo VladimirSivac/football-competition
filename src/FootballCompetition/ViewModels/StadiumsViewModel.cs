@@ -70,15 +70,15 @@ public partial class StadiumsViewModel : ViewModelBase, IRefreshable
         {
             if (string.IsNullOrWhiteSpace(Draft.Name))
             {
-                throw new InvalidOperationException("Stadium name is required.");
+                throw new InvalidOperationException("Название стадиона обязательно к заполнению.");
             }
             if (Draft.Capacity < 0)
             {
-                throw new InvalidOperationException("Capacity must be non-negative.");
+                throw new InvalidOperationException("Вместимость должна быть неотрицательной.");
             }
             if (Draft.TicketPrice < 0)
             {
-                throw new InvalidOperationException("Ticket price must be non-negative.");
+                throw new InvalidOperationException("Цена билета должна быть неотрицательной.");
             }
 
             var existing = _service.GetStadiums().FirstOrDefault(s => s.Key == Draft.Key);

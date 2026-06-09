@@ -30,11 +30,11 @@ public partial class MainWindowViewModel : ViewModelBase
 
         Sections = new ObservableCollection<NavigationSection>
         {
-            new("Teams",    "\uE716", Teams),
-            new("Players",  "\uE13D", Players),
-            new("Stadiums", "\uE707", Stadiums),
-            new("Matches",  "\uE787", Matches),
-            new("Reports",  "\uE9D9", Reports),
+            new("Команды",    "👥", Teams),
+            new("Игроки",  "🏃", Players),
+            new("Стадионы", "🏟️", Stadiums),
+            new("Матчи",  "📅", Matches),
+            new("Отчеты",  "📊", Reports),
         };
 
         SelectedSection = Sections[0];
@@ -62,7 +62,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private string _errorMessage = string.Empty;
 
     [ObservableProperty]
-    private string _errorTitle = "Something went wrong";
+    private string _errorTitle = "Что-то пошло не так";
 
     [RelayCommand]
     private void DismissError()

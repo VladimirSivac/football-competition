@@ -10,8 +10,8 @@
 
     <Grid RowDefinitions="Auto,*" Margin="32,28">
         <StackPanel Grid.Row="0" Spacing="4" Margin="0,0,0,20">
-            <TextBlock Text="Matches" FontSize="26" FontWeight="Bold" Foreground="#0F172A"/>
-            <TextBlock Text="Schedule fixtures, record final scores, and pick the host stadium."
+            <TextBlock Text="Матчи" FontSize="26" FontWeight="Bold" Foreground="#0F172A"/>
+            <TextBlock Text="Планируйте матчи, фиксируйте итоговые результаты и выбирайте домашний стадион."
                        FontSize="13" Foreground="#475569"/>
         </StackPanel>
 
@@ -26,9 +26,9 @@
                             BorderThickness="0,0,0,1"
                             Padding="16,12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Classes="primary" Content="New Match" Command="{Binding NewCommand}"/>
-                            <Button Classes="ghost"   Content="Edit"      Command="{Binding EditCommand}"/>
-                            <Button Classes="danger"  Content="Delete"    Command="{Binding DeleteCommand}"/>
+                            <Button Classes="primary" Content="Добавить" Command="{Binding NewCommand}"/>
+                            <Button Classes="ghost"   Content="Редактировать"      Command="{Binding EditCommand}"/>
+                            <Button Classes="danger"  Content="Удалить"    Command="{Binding DeleteCommand}"/>
                         </StackPanel>
                     </Border>
 
@@ -39,11 +39,11 @@
                               CanUserResizeColumns="True"
                               HorizontalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Date"    Binding="{Binding Date, StringFormat=yyyy-MM-dd}" Width="120"/>
-                            <DataGridTextColumn Header="Team 1"  Binding="{Binding Team1Name}" Width="*"/>
-                            <DataGridTextColumn Header="Team 2"  Binding="{Binding Team2Name}" Width="*"/>
-                            <DataGridTextColumn Header="Score"   Binding="{Binding Score}"     Width="80"/>
-                            <DataGridTextColumn Header="Stadium" Binding="{Binding StadiumName}" Width="180"/>
+                            <DataGridTextColumn Header="Дата"    Binding="{Binding Date, StringFormat=yyyy-MM-dd}" Width="120"/>
+                            <DataGridTextColumn Header="Команда 1"  Binding="{Binding Team1Name}" Width="*"/>
+                            <DataGridTextColumn Header="Команда 2"  Binding="{Binding Team2Name}" Width="*"/>
+                            <DataGridTextColumn Header="Счет"   Binding="{Binding Score}"     Width="80"/>
+                            <DataGridTextColumn Header="Стадион" Binding="{Binding StadiumName}" Width="180"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
@@ -56,7 +56,7 @@
                     BoxShadow="0 4 12 0 #15000000">
                 <DockPanel LastChildFill="True">
                     <TextBlock DockPanel.Dock="Top"
-                               Text="Match Details"
+                               Text="Детали матча"
                                FontSize="16"
                                FontWeight="SemiBold"
                                Margin="0,0,0,12"/>
@@ -66,19 +66,19 @@
                                 Spacing="6">
                         <TextBlock FontSize="20" FontWeight="Bold">
                             <Run Text="{Binding SelectedMatch.Team1Name, FallbackValue='—'}"/>
-                            <Run Text=" vs "/>
+                            <Run Text=" против "/>
                             <Run Text="{Binding SelectedMatch.Team2Name, FallbackValue='—'}"/>
                         </TextBlock>
                         <TextBlock>
-                            <Run Text="Date: "/>
+                            <Run Text="Дата: "/>
                             <Run Text="{Binding SelectedMatch.Date, StringFormat=yyyy-MM-dd}"/>
                         </TextBlock>
                         <TextBlock>
-                            <Run Text="Stadium: "/>
+                            <Run Text="Стадион: "/>
                             <Run Text="{Binding SelectedMatch.StadiumName}"/>
                         </TextBlock>
                         <TextBlock>
-                            <Run Text="Final Score: "/>
+                            <Run Text="Итоговый счет: "/>
                             <Run Text="{Binding SelectedMatch.Score}"/>
                         </TextBlock>
                     </StackPanel>
@@ -87,7 +87,7 @@
                                 IsVisible="{Binding IsEditing}"
                                 Spacing="10">
                         <StackPanel>
-                            <TextBlock Text="Team 1 (home)" FontSize="12" Foreground="#475569"/>
+                            <TextBlock Text="Команда 1 (хозяева)" FontSize="12" Foreground="#475569"/>
                             <ComboBox ItemsSource="{Binding Teams}"
                                       SelectedItem="{Binding DraftTeam1}"
                                       HorizontalAlignment="Stretch">
@@ -99,7 +99,7 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="Team 2 (away)" FontSize="12" Foreground="#475569"/>
+                            <TextBlock Text="Команда 2 (гости)" FontSize="12" Foreground="#475569"/>
                             <ComboBox ItemsSource="{Binding Teams}"
                                       SelectedItem="{Binding DraftTeam2}"
                                       HorizontalAlignment="Stretch">
@@ -111,7 +111,7 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="Stadium" FontSize="12" Foreground="#475569"/>
+                            <TextBlock Text="Стадион" FontSize="12" Foreground="#475569"/>
                             <ComboBox ItemsSource="{Binding Stadiums}"
                                       SelectedItem="{Binding DraftStadium}"
                                       HorizontalAlignment="Stretch">
@@ -123,19 +123,19 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="Date" FontSize="12" Foreground="#475569"/>
+                            <TextBlock Text="Дата" FontSize="12" Foreground="#475569"/>
                             <CalendarDatePicker SelectedDate="{Binding DraftDate}"
                                                 HorizontalAlignment="Stretch"/>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="Score (e.g. 2:1, leave blank if unplayed)"
+                            <TextBlock Text="Счет (например, 2:1, оставьте пустым, если не сыгран)"
                                        FontSize="12" Foreground="#475569"/>
                             <TextBox Text="{Binding Draft.Score}" PlaceholderText="2:1"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,12,0,0">
-                            <Button Classes="primary" Content="Save"   Command="{Binding SaveCommand}"/>
-                            <Button Classes="ghost"   Content="Cancel" Command="{Binding CancelEditCommand}"/>
+                            <Button Classes="primary" Content="Сохранить"   Command="{Binding SaveCommand}"/>
+                            <Button Classes="ghost"   Content="Отмена" Command="{Binding CancelEditCommand}"/>
                         </StackPanel>
                     </StackPanel>
                 </DockPanel>
